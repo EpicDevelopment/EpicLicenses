@@ -1,0 +1,131 @@
+# ===========================================================================
+# Plex Licenses Configuration
+# If you find any issues, need support, or have a suggestion for the bot, please join our support server and create a ticket, 
+# https://discord.gg/eRaeJdTsPY
+# Documentation: https://docs.plexdevelopment.net
+# ===========================================================================
+
+# ===========================================================================
+# BOT INFORMATION
+# You must not leave them as blank!
+# ===========================================================================
+Token: "BOT_TOKEN" # If you don't know how to get it, Look at our docs: https://docs.plexdevelopment.net
+BotName: "Plex Licenses"
+GuildID: "GUILD_ID" # This is your server's ID, Right click on your server icon and copy ID
+EmbedColors: "#5e99ff" # Hex color!
+LogCommands: false # If this is enabled it will log all the commands executed to the terminal
+Statistics: true # Show statistics in terminal when the bot starts? (This does not affect the stats command or anything else)
+MongoURI: "CONNECTION_URL" # MongoDB Connection String, How to get: https://docs.plexdevelopment.net/plex-licenses/creating-a-mongodb-cluster
+
+# ===========================================================================
+# BOT ACTIVITY
+# ===========================================================================
+BotActivitySettings:
+  Enabled: true
+  Type: "WATCHING" # WATCHING, PLAYING, COMPETING
+  Interval: 30 # Time in seconds between status changes, It's recommended to keep it above 20-30 seconds to avoid getting ratelimited
+  Statuses: # Valid Variables: {total-users}, {total-channels}, {total-licenses}, {total-requests}
+    - "{total-licenses} licenses"
+    - "{total-users} users"
+
+# ===========================================================================
+# LICENSE CONFIGURATION
+# ===========================================================================
+WebServerSettings: 
+  Port: 3000
+  ApiKey: "API_KEY" # The API Key to use for authentication, We recommend using this https://www.dashlane.com/features/password-generator with at least 32 characters
+
+LicenseSettings:
+  IPCap: 0 # Set IP-Caps for licenses? (Set to 0 to disable)
+  HWIDCap: 0 # Set HWID-Caps for licenses? (Set to 0 to disable)
+  RequireBuiltByBitUserID: true # Should it be required to specify the user's BuiltByBit user id when creating a license? This is useful for keeping track of which users has a license key for your resources, it's also easier to disable and find leaker's licenses/bbb profile, {{USERNAME}}
+  GiveCustomerRole: true # Should the bot automatically give customer roles to users that receive a license key? (Customer roles are specified when creating a product)
+  CustomerRoleOnJoin: true # If a user leaves the server, and has a customer role, should the bot automatically give the roles back if the user joins the server again?
+  Characters: "ABCDEFGHIJKLMNIOPQRSTUVWXYZ0123456789" # The characters that a license key can include
+
+EmbedSettings: # This is the embed users will get when they receive a new license key
+  Color: "#5e99ff"
+  Title: ""  # Leave blank to disable
+  AuthorName: "Your License Key"  # Leave blank to disable
+  AuthorIcon: "default"  # Set to "default" to use user's avatar, leave blank to disable
+  Description: "Sharing this key with anyone will result in your license being **permanently** disabled and your access to the product **removed**."
+  Fields:
+    - Name: "Product"
+      Value: "{product}"
+    - Name: "License Key"
+      Value: "```{licenseKey}```"
+    # Add more fields as needed
+
+RatelimitSettings:
+  Enabled: true # It's recommended to leave this enabled
+  MaxRequests: 15 # Max amount of requests in the specified time below
+  Time: 3 # Time in minutes only
+
+WebhookLogsSettings: # Enable webhook logs? (license/product commands, successful/failed license authentication, etc)
+  Enabled: true
+  AuthenticationWebhookURL: "WEBHOOK_URL" # Leave blank to disable
+  CommandsWebhookURL: "WEBHOOK_URL" # Leave blank to disable
+# ===========================================================================
+# COMMANDS CONFIGURATION
+# ===========================================================================
+# Configure all permissions to use the commands, (Only ROLE ID's work!)
+
+# /getlicense
+getLicense: # Users can use this command to see their own license keys, Everyone has access to this command by default
+  Enabled: true
+
+# /license create
+license_create: # Create license keys command
+  Enabled: true
+  AllowedRoles: ["ROLE_ID"] # You can add multiple
+
+# /license delete
+license_delete: # Delete license keys command
+  Enabled: true
+  AllowedRoles: ["ROLE_ID"] # You can add multiple
+
+# /license list
+license_list: # List all license keys command
+  Enabled: true
+  AllowedRoles: ["ROLE_ID"] # You can add multiple
+
+# /license get
+license_get: # Get a specific license key command
+  Enabled: true
+  AllowedRoles: ["ROLE_ID"] # You can add multiple
+
+# /license cleardata
+license_cleardata: # Clear HWID/IP data from license keys command
+  Enabled: true
+  AllowedRoles: ["ROLE_ID"] # You can add multiple
+
+
+
+
+# /product create
+product_create:
+  Enabled: true
+  AllowedRoles: ["ROLE_ID"] # You can add multiple
+
+# /product delete
+product_delete:
+  Enabled: true
+  AllowedRoles: ["ROLE_ID"] # You can add multiple
+
+# /product list
+product_list:
+  Enabled: true
+  AllowedRoles: ["ROLE_ID"] # You can add multiple
+
+# ===========================================================================
+# LOCALE
+# ===========================================================================
+Locale:
+  NoPermsMessage: "Sorry, you don't have permissions to use this command!"
+  # More coming soon..
+
+
+
+
+
+DevMode: true # DON'T ENABLE!
