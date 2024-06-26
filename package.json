@@ -1,27 +1,19 @@
 {
-  "name": "plexlicenses",
-  "version": "1.2.1",
-  "description": "Plex Licenses",
-  "main": "index.js",
-  "engines": {
-    "node": ">=18.19.0"
-  },
-  "scripts": {
-    "start": "node index"
-  },
-  "author": "Swqpping",
-  "license": "ISC",
-  "dependencies": {
-    "@discordjs/collection": "^1.0.0",
-    "@discordjs/rest": "^1.0.1",
-    "ansi-colors": "^4.1.3",
-    "axios": "^1.6.7",
-    "body-parser": "^1.20.2",
-    "discord.js": "^14.14.1",
-    "express": "^4.18.2",
-    "express-rate-limit": "^6.7.0",
-    "js-yaml": "^4.1.0",
-    "mongoose": "^6.11.2",
-    "node-fetch": "^2.6.7"
+	"name": "license-system",
+	"version": "1.0.0",
+	"description": "A license management system with Discord bot integration.",
+	"main": "index.js",
+	"scripts": {
+	  "start": "npm run setup && node index.js",
+	  "setup": "node deploy-commands.js"
+	},
+	"dependencies": {
+	  "body-parser": "^1.19.0",
+	  "discord.js": "^14.6.0",
+	  "express": "^4.18.2",
+	  "mongoose": "^6.7.2"
+	},
+	"author": "",
+	"license": "ISC"
   }
-}
+  
