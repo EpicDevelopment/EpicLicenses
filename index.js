@@ -2,16 +2,16 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const { Client, GatewayIntentBits } = require('discord.js');
-const License = require('./models/License');
 const setupCommands = require('./deploy-commands');
+const startBot = require('./bot');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const token = 'YOUR_DISCORD_BOT_TOKEN';
+const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/licenses';
+const discordToken = process.env.DISCORD_TOKEN;
 
 // MongoDB connection
-mongoose.connect('mongodb://localhost:27017/licenses', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // Middleware
 app.use(bodyParser.json());
@@ -19,6 +19,7 @@ app.use(bodyParser.json());
 // Express route to check license
 app.post('/checkLicense', async (req, res) => {
     const { licenseKey, product } = req.body;
+    const License = require('./models/License');
 
     try {
         const license = await License.findOne({ licenseKey, product });
@@ -35,8 +36,6 @@ app.post('/checkLicense', async (req, res) => {
 // Start Express server
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
+    setupCommands();
+    startBot(discordToken);
 });
-
-// Start the Discord bot
-setupCommands();
-require('./bot')(token);
