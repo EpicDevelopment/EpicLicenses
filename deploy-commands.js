@@ -8,11 +8,11 @@ const commands = [
     new SlashCommandBuilder().setName('license-fetch').setDescription('Fetch license details')
         .addStringOption(option => option.setName('license').setDescription('The license key').setRequired(true)),
     new SlashCommandBuilder().setName('license-list').setDescription('List licenses by BuiltByBit or Discord user')
-        .addStringOption(option => option.setName('auth').setDescription('BuiltByBit or Discord').setRequired(true))
+        .addStringOption(option => option.setName('auth').setDescription('BBB or Discord').setRequired(true))
         .addStringOption(option => option.setName('id').setDescription('ID of the user').setRequired(true)),
     new SlashCommandBuilder().setName('license-create').setDescription('Create a new license')
         .addStringOption(option => option.setName('product').setDescription('The product').setRequired(true))
-        .addStringOption(option => option.setName('builtbybit').setDescription('BuiltByBit user').setRequired(true))
+        .addStringOption(option => option.setName('builtbybit').setDescription('BBB user').setRequired(true))
         .addStringOption(option => option.setName('discord-user').setDescription('Discord user')),
     new SlashCommandBuilder().setName('license-delete').setDescription('Delete a license')
         .addStringOption(option => option.setName('license').setDescription('The license key').setRequired(true)),
