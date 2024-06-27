@@ -1,6 +1,5 @@
 // bot.js
 const { Client, GatewayIntentBits } = require('discord.js');
-const mongoose = require('mongoose');
 const License = require('./models/License');
 
 module.exports = (token) => {
@@ -32,7 +31,7 @@ module.exports = (token) => {
             } else if (authType === 'Discord') {
                 licenses = await License.find({ discordUser: id });
             }
-            if (licenses) {
+            if (licenses.length) {
                 await interaction.reply(JSON.stringify(licenses, null, 2));
             } else {
                 await interaction.reply('No licenses found.');
@@ -113,11 +112,9 @@ module.exports = (token) => {
             }
         } else if (commandName === 'guide') {
             const product = options.getString('product');
-            // Assume you have a predefined guide for each product
             const guides = {
                 'product1': 'Guide for product 1...',
                 'product2': 'Guide for product 2...',
-                // Add other product guides here
             };
             const guide = guides[product];
             if (guide) {
