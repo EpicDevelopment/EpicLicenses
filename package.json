@@ -1,16 +1,18 @@
 {
-	"name": "ELicense",
+	"name": "ELicenses",
 	"version": "1.0.0",
 	"description": "A license management system with Discord bot integration.",
-	"main": "index.js",
+	"main": "server.js",
 	"scripts": {
-		"start": "node index.js"
+		"start": "node server.js"
 	},
 	"dependencies": {
 		"body-parser": "^1.19.0",
 		"discord.js": "^14.6.0",
+		"dotenv": "^16.0.0",
 		"express": "^4.18.2",
-		"mongoose": "^6.7.2"
+		"mongoose": "^6.7.2",
+		"yaml": "^2.4.5"
 	},
 	"author": "snowyjavascript",
 	"license": "ISC"
