@@ -1,5 +1,5 @@
 // bot.js
-const { Client, GatewayIntentBits } = require('discord.js');
+const { Client, GatewayIntentBits, EmbedBuilder } = require('discord.js');
 const License = require('./models/License');
 
 module.exports = (token) => {
@@ -18,9 +18,17 @@ module.exports = (token) => {
             const licenseKey = options.getString('license');
             const license = await License.findOne({ licenseKey });
             if (license) {
-                await interaction.reply(JSON.stringify(license, null, 2));
+                const embed = new EmbedBuilder()
+                    .setColor('Green')
+                    .setTitle(':white_check_mark: License Details')
+                    .setDescription(`**License Key:** ${license.licenseKey}\n**Product:** ${license.product}\n**BuiltByBit User:** ${license.builtByBitUser}\n**Discord User:** ${license.discordUser}\n**IPs:** ${license.ips.join(', ')}\n**Blacklisted:** ${license.blacklisted}\n**Blacklist Reason:** ${license.blacklistReason}`);
+                await interaction.reply({ embeds: [embed] });
             } else {
-                await interaction.reply('License not found.');
+                const embed = new EmbedBuilder()
+                    .setColor('Red')
+                    .setTitle(':x: License Not Found')
+                    .setDescription(`No license found for key: ${licenseKey}`);
+                await interaction.reply({ embeds: [embed] });
             }
         } else if (commandName === 'license-list') {
             const authType = options.getString('auth');
@@ -32,9 +40,17 @@ module.exports = (token) => {
                 licenses = await License.find({ discordUser: id });
             }
             if (licenses.length) {
-                await interaction.reply(JSON.stringify(licenses, null, 2));
+                const embed = new EmbedBuilder()
+                    .setColor('Green')
+                    .setTitle(':white_check_mark: Licenses List')
+                    .setDescription(licenses.map(license => `**License Key:** ${license.licenseKey}\n**Product:** ${license.product}\n**BuiltByBit User:** ${license.builtByBitUser}\n**Discord User:** ${license.discordUser}\n**IPs:** ${license.ips.join(', ')}\n**Blacklisted:** ${license.blacklisted}\n**Blacklist Reason:** ${license.blacklistReason}`).join('\n\n'));
+                await interaction.reply({ embeds: [embed] });
             } else {
-                await interaction.reply('No licenses found.');
+                const embed = new EmbedBuilder()
+                    .setColor('Red')
+                    .setTitle(':x: No Licenses Found')
+                    .setDescription(`No licenses found for ${authType} user: ${id}`);
+                await interaction.reply({ embeds: [embed] });
             }
         } else if (commandName === 'license-create') {
             const product = options.getString('product');
@@ -43,11 +59,19 @@ module.exports = (token) => {
             const licenseKey = Math.random().toString(36).substring(2, 15); // simple key generator
             const newLicense = new License({ licenseKey, product, builtByBitUser, discordUser });
             await newLicense.save();
-            await interaction.reply(`License created: ${licenseKey}`);
+            const embed = new EmbedBuilder()
+                .setColor('Green')
+                .setTitle(':white_check_mark: License Created')
+                .setDescription(`License created: ${licenseKey}`);
+            await interaction.reply({ embeds: [embed] });
         } else if (commandName === 'license-delete') {
             const licenseKey = options.getString('license');
             await License.deleteOne({ licenseKey });
-            await interaction.reply(`License deleted: ${licenseKey}`);
+            const embed = new EmbedBuilder()
+                .setColor('Green')
+                .setTitle(':white_check_mark: License Deleted')
+                .setDescription(`License deleted: ${licenseKey}`);
+            await interaction.reply({ embeds: [embed] });
         } else if (commandName === 'ip-add') {
             const licenseKey = options.getString('license');
             const ip = options.getString('ip');
@@ -55,9 +79,17 @@ module.exports = (token) => {
             if (license) {
                 license.ips.push(ip);
                 await license.save();
-                await interaction.reply(`IP added: ${ip}`);
+                const embed = new EmbedBuilder()
+                    .setColor('Green')
+                    .setTitle(':white_check_mark: IP Added')
+                    .setDescription(`IP added: ${ip}`);
+                await interaction.reply({ embeds: [embed] });
             } else {
-                await interaction.reply('License not found.');
+                const embed = new EmbedBuilder()
+                    .setColor('Red')
+                    .setTitle(':x: License Not Found')
+                    .setDescription(`No license found for key: ${licenseKey}`);
+                await interaction.reply({ embeds: [embed] });
             }
         } else if (commandName === 'ip-del') {
             const licenseKey = options.getString('license');
@@ -66,17 +98,33 @@ module.exports = (token) => {
             if (license) {
                 license.ips = license.ips.filter(storedIp => storedIp !== ip);
                 await license.save();
-                await interaction.reply(`IP removed: ${ip}`);
+                const embed = new EmbedBuilder()
+                    .setColor('Green')
+                    .setTitle(':white_check_mark: IP Removed')
+                    .setDescription(`IP removed: ${ip}`);
+                await interaction.reply({ embeds: [embed] });
             } else {
-                await interaction.reply('License not found.');
+                const embed = new EmbedBuilder()
+                    .setColor('Red')
+                    .setTitle(':x: License Not Found')
+                    .setDescription(`No license found for key: ${licenseKey}`);
+                await interaction.reply({ embeds: [embed] });
             }
         } else if (commandName === 'ip-list') {
             const licenseKey = options.getString('license');
             const license = await License.findOne({ licenseKey });
             if (license) {
-                await interaction.reply(JSON.stringify(license.ips, null, 2));
+                const embed = new EmbedBuilder()
+                    .setColor('Green')
+                    .setTitle(':white_check_mark: IP List')
+                    .setDescription(`IPs for license ${licenseKey}: ${license.ips.join(', ')}`);
+                await interaction.reply({ embeds: [embed] });
             } else {
-                await interaction.reply('License not found.');
+                const embed = new EmbedBuilder()
+                    .setColor('Red')
+                    .setTitle(':x: License Not Found')
+                    .setDescription(`No license found for key: ${licenseKey}`);
+                await interaction.reply({ embeds: [embed] });
             }
         } else if (commandName === 'blacklist') {
             const type = options.getString('type');
@@ -89,9 +137,17 @@ module.exports = (token) => {
                     licenses.blacklisted = true;
                     licenses.blacklistReason = reason;
                     await licenses.save();
-                    await interaction.reply(`License ${id} blacklisted. Reason: ${reason}`);
+                    const embed = new EmbedBuilder()
+                        .setColor('Green')
+                        .setTitle(':white_check_mark: License Blacklisted')
+                        .setDescription(`License ${id} blacklisted. Reason: ${reason}`);
+                    await interaction.reply({ embeds: [embed] });
                 } else {
-                    await interaction.reply('License not found.');
+                    const embed = new EmbedBuilder()
+                        .setColor('Red')
+                        .setTitle(':x: License Not Found')
+                        .setDescription(`No license found for key: ${id}`);
+                    await interaction.reply({ embeds: [embed] });
                 }
             } else if (type === 'BuiltByBit') {
                 licenses = await License.find({ builtByBitUser: id });
@@ -100,7 +156,11 @@ module.exports = (token) => {
                     license.blacklistReason = reason;
                     await license.save();
                 });
-                await interaction.reply(`All licenses for BuiltByBit user ${id} blacklisted. Reason: ${reason}`);
+                const embed = new EmbedBuilder()
+                    .setColor('Green')
+                    .setTitle(':white_check_mark: User Blacklisted')
+                    .setDescription(`All licenses for BuiltByBit user ${id} blacklisted. Reason: ${reason}`);
+                await interaction.reply({ embeds: [embed] });
             } else if (type === 'Discord') {
                 licenses = await License.find({ discordUser: id });
                 licenses.forEach(async (license) => {
@@ -108,7 +168,11 @@ module.exports = (token) => {
                     license.blacklistReason = reason;
                     await license.save();
                 });
-                await interaction.reply(`All licenses for Discord user ${id} blacklisted. Reason: ${reason}`);
+                const embed = new EmbedBuilder()
+                    .setColor('Green')
+                    .setTitle(':white_check_mark: User Blacklisted')
+                    .setDescription(`All licenses for Discord user ${id} blacklisted. Reason: ${reason}`);
+                await interaction.reply({ embeds: [embed] });
             }
         } else if (commandName === 'guide') {
             const product = options.getString('product');
@@ -118,9 +182,17 @@ module.exports = (token) => {
             };
             const guide = guides[product];
             if (guide) {
-                await interaction.reply(guide);
+                const embed = new EmbedBuilder()
+                    .setColor('Green')
+                    .setTitle(':white_check_mark: Guide')
+                    .setDescription(guide);
+                await interaction.reply({ embeds: [embed] });
             } else {
-                await interaction.reply('Guide not found.');
+                const embed = new EmbedBuilder()
+                    .setColor('Red')
+                    .setTitle(':x: Guide Not Found')
+                    .setDescription('No guide found for the specified product.');
+                await interaction.reply({ embeds: [embed] });
             }
         }
     });
