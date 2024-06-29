@@ -1,1 +1,33 @@
-s
+##########################################
+#              Bot Config                #
+##########################################
+
+BOT_CONFIG:
+  MONGO_URI: "m-uri"
+  TOKEN: "b-token"
+  GUILD_ID: "g-id"
+
+##########################################
+#            Activity Config             #
+##########################################
+
+ACTIVITY:
+  ENABLED: true
+  ACTIVITIES:
+    - ["WATCHING", "Epic Plugins"]
+  INTERVAL: "30m"
+
+##########################################
+#            Licenses Config             #
+##########################################
+
+LICENSES_CONFIG:
+  WEB_PORT: 3000
+  API_KEY: "" #42 chars
+  GENERAL_SETTINGS:
+    TESTING_MODE: true
+    VISIBLE_MESSAGES: true
+  LOG_SYSTEM:
+    ENABLED: true
+    WEBHOOK_URL: "WEBHOOK_URL"
+    WEBHOOK_IMAGE: "WEBHOOK_IMAGE"
