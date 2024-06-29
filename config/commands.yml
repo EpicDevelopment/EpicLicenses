@@ -1,0 +1,9 @@
+PERMISSIONS:
+  LICENSE:
+    - "Staff"
+  PRODUCT:
+    - "Admin"
+  BLACKLIST:
+    - "Admin"
+  SELF_LICENSES:
+    - "Client"

@@ -1,0 +1,33 @@
+##########################################
+#              Bot Config                #
+##########################################
+
+BOT_CONFIG:
+  MONGO_URI: "mongodb+srv://eadmin:k9hgHT33TA3qbbbj@elicense.5aadqnq.mongodb.net/?retryWrites=true&w=majority&appName=elicense"
+  TOKEN: "MTI0NTQ3MTk0NTk4MjYwNzQyMA.GyjXSO.RapQ1I5Qw2MroW8oMKiiUhuIqE1Z54VWZDIjvE"
+  GUILD_ID: "1046780150605418567"
+
+##########################################
+#            Activity Config             #
+##########################################
+
+ACTIVITY:
+  ENABLED: true
+  ACTIVITIES:
+    - ["WATCHING", "Epic Plugins"]
+  INTERVAL: "30m"
+
+##########################################
+#            Licenses Config             #
+##########################################
+
+LICENSES_CONFIG:
+  WEB_PORT: 3000
+  API_KEY: "" #42 chars
+  GENERAL_SETTINGS:
+    TESTING_MODE: true
+    VISIBLE_MESSAGES: true
+  LOG_SYSTEM:
+    ENABLED: true
+    WEBHOOK_URL: "https://discord.com/api/webhooks/1256569192300285973/EQQUtztFVl1rqFQbXSx0D504ojsSR83YGEcNR51docbfef5f8s5N0gyskh1DSnxC10y5"
+    WEBHOOK_IMAGE: "WEBHOOK_IMAGE"
