@@ -6,9 +6,9 @@
 
 ## Requires
 
-NodeJS 18 Web Server
-Mongo Database (With URI)
-Discord Bot (Token, Client ID, Guild ID)
+- NodeJS 18 Web Server
+- Mongo Database (With URI)
+- Discord Bot (Token, Client ID, Guild ID)
 
 ## Support
 
