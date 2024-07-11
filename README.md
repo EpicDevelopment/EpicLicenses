@@ -12,4 +12,4 @@
 
 ## Support
 
-Support will not be provided, if you don't know how to use it then don't use it
+Support will not be provided, if you don't know how to use it then simply don't use it.
